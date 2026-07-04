@@ -1,0 +1,42 @@
+
+services:
+
+  # ── Spark Master ───────────────────────────────────────────────────────────
+  spark-master:
+    image: apache/spark:3.5.1-python3
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    environment:
+      - SPARK_MASTER_HOST=spark-master
+    ports:
+      - "8080:8080"    # Spark Master UI
+      - "7077:7077"    # Spark Master port
+    volumes:
+      - ./data:/opt/spark/data
+      - ./src:/opt/spark/src
+
+  # ── Spark Worker ───────────────────────────────────────────────────────────
+  spark-worker:
+    image: apache/spark:3.5.1-python3
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    environment:
+      - SPARK_WORKER_MEMORY=2g
+      - SPARK_WORKER_CORES=2
+    depends_on:
+      - spark-master
+    volumes:
+      - ./data:/opt/spark/data
+      - ./src:/opt/spark/src
+
+  # ── Jupyter with PySpark ───────────────────────────────────────────────────
+  jupyter:
+    image: jupyter/pyspark-notebook:latest
+    ports:
+      - "8888:8888"
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+    volumes:
+      - ./notebooks:/home/jovyan/notebooks
+      - ./data:/home/jovyan/data
+      - ./src:/home/jovyan/src
+    depends_on:
+      - spark-master
