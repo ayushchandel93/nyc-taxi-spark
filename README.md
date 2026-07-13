@@ -62,17 +62,24 @@ python -m streamlit run dashboard/app.py
 ```
 
 ## Dashboard
-- 5 KPI cards (trips, revenue, avg fare, distance, tip %)
-- Daily revenue trend with weekend highlighting
-- Hourly trip volume by time of day
-- Day of week pattern
-- Payment type breakdown
-- Top 15 pickup zones by revenue
+
+![Dashboard Overview](docs/dashboard_overview.png)
+
+![Dashboard Charts](docs/dashboard_charts.png)
+
+- 5 KPI cards — 5.4M trips, $99.6M revenue, $18.44 avg fare, 3.30 mi, 21.4% tip
+- Daily revenue trend with weekday vs weekend split
+- Trip volume by hour — clear evening peak at 5–8pm
+- 83.9% of payments by credit card
+- Zone 132 (JFK Airport) dominates revenue across all zones
+- Daily summary table with formatted metrics
+
 
 ## Key Findings
 
-- Average NYC taxi trip: 3.26 miles, $18.37 fare, 15 minutes at 11 mph — reflects real NYC traffic congestion
-- 9.2% of raw data was invalid — negative fares, zero distances, corrupt timestamps, impossible speeds
-- Credit card is the dominant payment method with significantly higher tip rates than cash
-- Evening hours (5–8pm) show 3× more trips than late night (2–4am)
-- Weekday trips outnumber weekend trips but weekend trips average slightly higher fares
+- Average NYC taxi trip: 3.30 miles, $18.44 fare, 21.4% tip rate — reflects real NYC traffic at ~11 mph
+- 9.2% of raw data removed (549,011 rows) — negative fares, zero distances, corrupt timestamps
+- Credit card dominates at 83.9% of all payments — significantly higher tip rates than cash
+- Evening hours (5–8pm) show the highest trip volume — 3× more than late night (2–4am)
+- Zone 132 (JFK Airport) is the single highest revenue pickup zone by a large margin
+- Weekday trips outnumber weekend trips but Saturday shows higher per-trip revenue
